@@ -1,13 +1,33 @@
 import { nanoid } from "nanoid";
 import React from "react";
 import { useForm } from "react-hook-form";
-const Form = ({ food, setFood }) => {
+const Form = ({ food, setFood, id, setEdit }) => {
   const { register, handleSubmit } = useForm();
 
   const onSubmit = (data) => {
-    let id = nanoid();
+    if (id !== undefined) {
+      onSubmitEdit(data);
+      return;
+    }
+    id = nanoid();
     data = { id, ...data };
     setFood(food.concat(data));
+  };
+  const onSubmitEdit = (data) => {
+    let newData = [];
+    for (let obj of food) {
+      if (obj.id === id) {
+        obj.name = data.name;
+        obj.kcal = data.kcal;
+      }
+      newData.push(obj);
+    }
+    setFood(newData);
+    setEdit({
+      id: null,
+      name: "",
+      kcal: "",
+    });
   };
   return (
     <div className="form-container ba bw1 br4 pa4 ma4">

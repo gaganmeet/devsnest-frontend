@@ -13,6 +13,7 @@ function App() {
   ]);
   return (
     <div className="App flex justify-start flex-column items-center">
+      <h1>Calorie Tracker</h1>
       <Form food={food} setFood={setFood} />
       {food.map((data, index) => (
         <Card
